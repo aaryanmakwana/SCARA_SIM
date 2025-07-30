@@ -42,11 +42,10 @@ int main(){
 
     }
 
+    predict_theta(TARGETx, TARGETy, rb1, &THETA_1, &THETA_2);
+
     DrawRectangle(TARGETx-5,TARGETy-5,10,10,GreenCol);
     draw_robot(rb1, THETA_1, THETA_2);
-    THETA_1 += 0.02;
-    THETA_2 += 0.01;
-
 
     EndDrawing();
 
