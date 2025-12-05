@@ -1,19 +1,11 @@
 #include "libs/calc.h"
 #include "libs/robot.h"
-#include <math.h>
 #include <raylib.h>
 
-void safe_area(){
-  for (int ki = 0; ki < 1000; ki++) {
-    for (int kj = 0; kj < 1000; kj++) {
-      double D1 = sqrt(pow(ki-B1.x,2)+pow(kj-B1.y,2));
-      double D2 = sqrt(pow(ki-B2.x,2)+pow(kj-B2.y,2));
-      if(D1 < (L1a+L1b) && D2<(L2a+L2b)){
-        DrawCircle(ki, kj, 2, GreenCol);
-      }
-    }
-  }
+void safe_area(struct Robot* rb1){
+    DrawCircle(rb1->origin.x, rb1->origin.y, (rb1->link_1_length + rb1->link_2_length), GreenCol);
 }
+
 
 int main(){
   InitWindow(1000,1000,"SCARA");
@@ -28,7 +20,7 @@ int main(){
 
   struct Robot *rb1 = create_robot((Vector2){500,500}, 200, 200);
 
-  SetWindowState(FLAG_WINDOW_RESIZABLE);
+  //SetWindowState(FLAG_WINDOW_RESIZABLE);
 
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -39,13 +31,28 @@ int main(){
       //printf("%f\n", ballPosition.x);
       TARGETx = ballPosition.x;
       TARGETy = ballPosition.y;
-
     }
 
-    predict_theta(TARGETx, TARGETy, rb1, &THETA_1, &THETA_2);
+    if(IsKeyDown(KEY_UP)){
+        go_up(rb1);
+    }
+    if(IsKeyDown(KEY_DOWN)){
+        go_down(rb1);
+    }
+    if(IsKeyDown(KEY_LEFT)){
+        go_left(rb1);
+    }
+    if(IsKeyDown(KEY_RIGHT)){
+        go_right(rb1);
+    }
 
-    DrawRectangle(TARGETx-5,TARGETy-5,10,10,GreenCol);
-    draw_robot(rb1, THETA_1, THETA_2);
+    safe_area(rb1);
+
+    //predict_theta(TARGETx, TARGETy, rb1, &THETA_1, &THETA_2);
+
+    //DrawRectangle(TARGETx-5,TARGETy-5,10,10,BaigeCol);
+    //draw_robot(rb1, THETA_1, THETA_2);
+    render_robot(rb1);
 
     EndDrawing();
 
