@@ -108,3 +108,8 @@ void go_right(struct Robot* rb){
     rb->theta1 -= 0.02;
     rb->theta2 += 0.02;
 }
+
+void move_robot(struct Robot* rb, double dx, double dy){
+    rb->theta1 += -(rb->link_1_length * sin(rb->theta1) * dx) + (rb->link_1_length * cos(rb->theta1) * dy);
+    rb->theta2 -= -(rb->link_2_length * sin(rb->theta2) * dx) + (rb->link_2_length * cos(rb->theta2) * dy);
+}

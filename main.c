@@ -21,6 +21,8 @@ int main(){
   struct Robot *rb1 = create_robot((Vector2){500,500}, 200, 200);
 
   //SetWindowState(FLAG_WINDOW_RESIZABLE);
+  //
+  double step_size = 0.0001;
 
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -33,17 +35,22 @@ int main(){
       TARGETy = ballPosition.y;
     }
 
+
     if(IsKeyDown(KEY_UP)){
-        go_up(rb1);
+        //go_up(rb1);
+        move_robot(rb1, step_size, 0.0);
     }
     if(IsKeyDown(KEY_DOWN)){
-        go_down(rb1);
+        //go_down(rb1);
+        move_robot(rb1, -step_size, 0.0);
     }
     if(IsKeyDown(KEY_LEFT)){
-        go_left(rb1);
+        //go_left(rb1);
+        move_robot(rb1, 0.0, step_size);
     }
     if(IsKeyDown(KEY_RIGHT)){
-        go_right(rb1);
+        //go_right(rb1);
+        move_robot(rb1, 0.0, -step_size);
     }
 
     safe_area(rb1);
