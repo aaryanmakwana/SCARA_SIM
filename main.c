@@ -1,7 +1,8 @@
-#include "libs/calc.h"
-#include "libs/robot.h"
-#include <raylib.h>
+//#include "libs/calc.h"
+#include "libs/robot2.h"
+//#include <raylib.h>
 
+/*
 void safe_area(struct Robot* rb1){
     DrawCircle(rb1->origin.x, rb1->origin.y, (rb1->link_1_length + rb1->link_2_length), GreenCol);
 }
@@ -63,14 +64,59 @@ int main(){
 
     EndDrawing();
 
-    /*TARGETx += 1;
+    TARGETx += 1;
     TARGETy += 0.3;
 
     TARGET.x = 600 + TARGETx%100;
-    TARGET.y = 500 + TARGETy%100;*/
+    TARGET.y = 500 + TARGETy%100;
+
 
   }
 
   //printf("\n\n\n%lf\n\n\n",forward_K2(theta_1, theta_2)) ;
 
+}
+*/
+
+
+int main(){
+
+    InitWindow(1000,1000,"SCARA");
+    SetTargetFPS(60);
+
+    struct Scara* rb1 = createScara((Vector2){500,500}, 220, 180);
+    double step_size = 01.0;
+
+    Vector2 target = {800.0,800.0};
+    moveScara(rb1,target);
+
+    while(!WindowShouldClose()){
+        BeginDrawing();
+        ClearBackground(BlackCol);
+
+        if(IsKeyDown(KEY_UP)){
+            target = (Vector2){target.x, target.y - step_size};
+            moveScara(rb1, target);
+        }
+
+        if(IsKeyDown(KEY_DOWN)){
+            target = (Vector2){target.x, target.y - step_size};
+            moveScara(rb1, target);
+        }
+
+        if(IsKeyDown(KEY_LEFT)){
+            target = (Vector2){target.x, target.y - step_size};
+            moveScara(rb1, target);
+        }
+
+        if(IsKeyDown(KEY_RIGHT)){
+            target = (Vector2){target.x, target.y - step_size};
+            moveScara(rb1, target);
+        }
+
+        safeAreaScara(rb1);
+        drawScara(rb1);
+
+        EndDrawing();
+    }
 }
